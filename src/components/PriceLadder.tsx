@@ -1,4 +1,4 @@
-import { StyleHTMLAttributes, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { FixedSizeList as List } from 'react-window'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { twMerge } from 'tailwind-merge'
@@ -9,6 +9,7 @@ import OrderForm from './OrderForm'
 const PriceLadder: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([])
   const [showAllLevels, setShowAllLevels] = useState<boolean>(true)
+  const listRef = useRef<List>(null)
   const midpointPrice = useMemo(() => {
     const bidOrders = orders.filter((order) => order.side === 'bid')
     const askOrders = orders.filter((order) => order.side === 'ask')
@@ -46,6 +47,15 @@ const PriceLadder: React.FC = () => {
             price === midpointPrice,
         )
   }, [showAllLevels, orders, midpointPrice])
+
+  useEffect(() => {
+    if (listRef.current) {
+      const midpointIndex = filteredPrices.indexOf(midpointPrice)
+      if (midpointIndex >= 0) {
+        listRef.current.scrollToItem(midpointIndex, 'center')
+      }
+    }
+  }, [filteredPrices, midpointPrice])
 
   const renderPriceLevel: React.FC<{ index: number; style: any }> = ({
     index,
@@ -114,6 +124,7 @@ const PriceLadder: React.FC = () => {
       </button>
       <div className='border border-white'>
         <List
+          ref={listRef}
           height={540}
           itemCount={filteredPrices.length}
           itemSize={33}
