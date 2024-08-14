@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply h-full bg-[#1A1215] text-white;
+}
+
+.container {
+  @apply mx-auto w-full max-w-3xl px-5;
+}
+
+.input-form {
+  @apply flex items-center gap-2;
+}
+
+.input-form label {
+  @apply w-20 text-right;
+}
+
+select,
+input {
+  @apply h-8 w-60 rounded bg-transparent px-2 outline-none ring-1 ring-gray-500/50 focus:ring-2 focus:ring-sky-500;
+}
+
+option {
+  @apply bg-black;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+select::-ms-expand {
+  @apply hidden;
+}
