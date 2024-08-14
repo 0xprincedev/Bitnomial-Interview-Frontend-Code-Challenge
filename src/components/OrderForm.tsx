@@ -23,17 +23,18 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='mx-auto w-fit space-y-4'>
       <div className='input-form'>
-        <label>Side</label>
-        <select {...register('side')}>
+        <label htmlFor='side'>Side</label>
+        <select id='side' {...register('side')}>
           <option value='bid'>Bid</option>
           <option value='ask'>Ask</option>
         </select>
       </div>
       <div>
         <div className='input-form'>
-          <label>Price</label>
+          <label htmlFor='price'>Price</label>
           <input
             type='number'
+            id='price'
             {...register('price', {
               validate: (value) =>
                 +value >= referencePrice - priceRange &&
@@ -50,9 +51,10 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit }) => {
       </div>
       <div>
         <div className='input-form'>
-          <label>Quantity</label>
+          <label htmlFor='quantity'>Quantity</label>
           <input
             type='number'
+            id='quantity'
             {...register('quantity', { validate: (value) => +value >= 1 })}
           />
         </div>
