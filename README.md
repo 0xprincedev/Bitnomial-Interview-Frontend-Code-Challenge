@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bitnomial Interview Frontend Code Challenge - Price Ladder Application
 
-## Getting Started
+This project is a frontend application designed for Bitnomial, showcasing a basic implementation of a price ladder with an order submission component. sThe application provides a central limit order book display, allowing users to view market depth and submit buy and sell orders.
 
-First, run the development server:
+## Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Node.js**: Ensure you have Node.js 20.11.1 installed on your machine.
+- **npm or yarn**: The project uses yarn for dependency management. Ensure npm or yarn is installed
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Install Dependencies**
+    ```bash
+    yarn install
+    ```
+2.  **Start the application**
+    ```bash
+    yarn dev
+    ```
+3.  **Open the application**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    Open your browser and navigate to `http://localhost:3000`.
 
-## Learn More
+## Project Overview
 
-To learn more about Next.js, take a look at the following resources:
+  - **Price Ladder Display**: A vertical list showing price levels with bids on the left in green and asks on the right in red. Highlights the midpoint price between the best bid and ask, or a reference price if no orders are present.
+  - **Order Submission**: Users can submit buy and sell orders with specified quantities at any visible price level through an intuitive order entry form.
+  - **Data Management**: Uses a mock data structure for the order book. Updates the order book in real-time as new orders are placed.
+  - **State management**: Utilizes React hooks to manage the state of the order book and the price ladder.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Bonus Options Implemented
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  - **Dynamic Scrolling**: Implemented dynamic scrolling using `react-window` to efficiently render a large number of price levels while maintaining smooth performance.
+  - **Price Level Compression**: A checkbox to switch between showing all price levels and only those with existing orders.
+  - **Keyboard Shortcuts**: Implemented shortcuts using `react-hotkeys-hook` for quick order placement(`Ctrl + B` for bid, `Ctrl + A` for ask).
 
-## Deploy on Vercel
+## How It Works
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Order Form**: A form where users can choose the order side (bid or ask), set the price within a defined range, and input the quantity. The form validates inputs and highlights errors for user guidance.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. **Price Ladder**: Displays the aggregate volume of orders at each price level. Users can view bid and ask volumes for each level, with the midpoint price distinctly highlighted.
+
+3. **Dynamic Interaction**: The price ladder and order book update dynamically as new orders are submitted, ensuring real-time feedback and accurate market depth representation.
+
+## Conclusion
+
+This project demonstrates a foundational understanding of creating a frontend application for a derivatives exchange. The solution is designed to be extendable, focusing on simplicity, clarity, and efficiency, aligning with Bitnomial's expectations for a clean, effective trading tool.
+

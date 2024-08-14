@@ -1,5 +1,6 @@
 import { StyleHTMLAttributes, useMemo, useState } from 'react'
 import { FixedSizeList as List } from 'react-window'
+import { Icon } from '@iconify/react/dist/iconify.js'
 import { twMerge } from 'tailwind-merge'
 import { priceRange, referencePrice } from '@/constant'
 import { Order } from '@/types'
@@ -39,10 +40,12 @@ const PriceLadder: React.FC = () => {
     )
     return showAllLevels
       ? allPrices
-      : allPrices.filter((price) =>
-          orders.some((order) => order.price === price),
+      : allPrices.filter(
+          (price) =>
+            orders.some((order) => order.price === price) ||
+            price === midpointPrice,
         )
-  }, [showAllLevels, orders])
+  }, [showAllLevels, orders, midpointPrice])
 
   const renderPriceLevel: React.FC<{ index: number; style: any }> = ({
     index,
@@ -60,13 +63,17 @@ const PriceLadder: React.FC = () => {
       <div
         style={style}
         className={twMerge(
-          'price-level grid grid-cols-12',
-          index !== 0 ? 'border-t border-gray-500/50' : '',
+          'price-level grid grid-cols-12 border-b border-gray-500/50',
           price === midpointPrice ? 'z-10 border-y border-yellow-500' : '',
         )}
         key={price}
       >
-        <div className='flex h-8 items-end justify-start bg-green-700 px-1'>
+        <div
+          className={twMerge(
+            'flex items-end justify-start bg-green-700 px-1',
+            price === midpointPrice ? 'h-[31px]' : 'h-8',
+          )}
+        >
           {bidVolume > 0 ? bidVolume : ''}
         </div>
         <div
@@ -77,7 +84,12 @@ const PriceLadder: React.FC = () => {
         >
           {price}
         </div>
-        <div className='flex h-8 items-start justify-end bg-red-700 px-1'>
+        <div
+          className={twMerge(
+            'flex items-start justify-end bg-red-700 px-1',
+            price === midpointPrice ? 'h-[31px]' : 'h-8',
+          )}
+        >
           {askVolume > 0 ? askVolume : ''}
         </div>
       </div>
@@ -86,6 +98,20 @@ const PriceLadder: React.FC = () => {
 
   return (
     <div className='space-y-4'>
+      <button
+        className='ml-auto flex items-center gap-1'
+        onClick={() => setShowAllLevels((prev) => !prev)}
+      >
+        <div className='size-5 bg-white'>
+          {!showAllLevels && (
+            <Icon
+              icon='material-symbols:check'
+              className='text-xl text-black'
+            />
+          )}
+        </div>
+        <span>Hide Empty Levels</span>
+      </button>
       <div className='border border-white'>
         <List
           height={540}

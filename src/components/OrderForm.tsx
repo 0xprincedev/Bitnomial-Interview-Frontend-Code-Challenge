@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { priceRange, referencePrice } from '@/constant'
 import { Order } from '@/types'
 
@@ -11,9 +12,13 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit }) => {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm<Order>({
     defaultValues: { side: 'bid', price: referencePrice, quantity: 1 },
   })
+
+  useHotkeys('ctrl+b', () => setValue('side', 'bid'))
+  useHotkeys('ctrl+a', () => setValue('side', 'ask'))
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='mx-auto w-fit space-y-4'>
